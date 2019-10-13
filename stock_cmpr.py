@@ -59,6 +59,7 @@ def load_historical_data_from_yf(ticker_list, file_out, date, interval):
 
     return stock_historical_data
 
+
 def get_ticker_num(ticker_list, ticker):
     """
         parameters:
