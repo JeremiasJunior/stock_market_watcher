@@ -59,7 +59,6 @@ def load_historical_data_from_yf(ticker_list, file_out, date, interval):
 
     return stock_historical_data
 
-
 def get_ticker_num(ticker_list, ticker):
     """
         parameters:
@@ -89,3 +88,34 @@ def get_ticker_historical_data(historical_data, ticker_list ,ticker_num, price_p
     stock_prices = np.flip(stock_prices)
 
     return stock_prices
+
+def delta_list(l_list):
+    aux = 0
+    size_list = len(l_list)
+    new_list = list()
+    new_list.append(0)
+
+    for i in l_list:
+        if(aux == (size_list-2)):
+            new_list.append(0)
+            return new_list
+        new_list.append((i - new_list[aux]))
+        aux = aux+1
+    return new_list
+    
+
+def avg_between_lists(a_list, b_list):
+    new_list = []
+    aux = 0
+    for i in a_list:
+        new_list.append((a_list[aux] + b_list[aux])/2)
+        aux = aux+1
+    return new_list
+
+def log_normalization(l_list):
+    new_list = []
+
+    for i in l_list:
+        new_list.append(np.log(i))
+
+    return new_list
