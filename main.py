@@ -16,8 +16,10 @@ import plot_module
 
 """
 
-date = ['2011-01-01', '2019-01-01']
+date = ['2015-01-01', '2019-01-01']
 ticker_list = stock_cmpr.load_ticker_list('stock_tickers.csv')
-interval = 'monthly'
+interval = 'daily'
 historical_data = stock_cmpr.load_historical_data_from_yf(ticker_list, 'yf_historical_data.txt', date, interval)
 
+plot_module.plot_price_data(historical_data, ticker_list)
+plot_module.scatter_price_data(historical_data, ticker_list)
