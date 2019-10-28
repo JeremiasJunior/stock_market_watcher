@@ -90,17 +90,23 @@ def get_ticker_historical_data(historical_data, ticker_list ,ticker_num, price_p
     return stock_prices
 
 def delta_list(l_list):
+    new_list = list()
+    new_list.append(0)
+    
+    for i in np.arange(1,len(l_list)):
+        new_list.append(l_list[i]- l_list[i-1])
+
+    return new_list
+
+def del_function(l_list):
+    epslon = 0.003
     aux = 0
     size_list = len(l_list)
     new_list = list()
-    new_list.append(0)
+    new_list.append(l_list[0])
 
     for i in l_list:
-        if(aux == (size_list-2)):
-            new_list.append(0)
-            return new_list
-        new_list.append((i - new_list[aux]))
-        aux = aux+1
+        new_list.append()
     return new_list
     
 
