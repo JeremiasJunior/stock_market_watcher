@@ -1,72 +1,80 @@
-import numpy as np
-from datetime import datetime
-from time import sleep
-from yahoofinancials import YahooFinancials as yf
-import stock_cmpr
-import json
-import threading 
-#i
+'''
+notas do desenvolvimento
 
+12/13/2019 - 3:28
+-primeiro vou fazer tudo o mais direto possivel, depois me preocupo com multithread nas funções
+
+'''
+
+
+import time
+import json
+import concurrent.futures
+import collections
+import numpy as np
+import stock_cmpr
+from yahoofinancials import YahooFinancials as yf
+from datetime import datetime
+
+'''
+inicializa o basico:
+
+    -leitura dos tickers
+    -cria arquivo .json
+    -inicializa a variavel dict
+
+'''
 
 ticker_list = stock_cmpr.load_ticker_list('stock_tickers.csv')
-delay = []
+now = datetime.now()
+f_name = (str(now.year) + '-' + str(now.month)+'-'+str(now.day)+'@'+str(now.hour)+'-'+str(now.minute))
+f_dir = './data/'+str(f_name)+'.json'
+f_json = open(f_dir,'w+')
 
-file_json = [] ## armazena os arquivos
+data_dict = collections.defaultdict(list)
 
-def return_date(): ## retorna lista com data atual
-    now = datetime.now()
-    date = [now.year, now.month, now.day, now.hour, now.minute]
-    return date
+for ticker in ticker_list:
+    data_dict[ticker] = {
+        'curr_price': [],
+        'curr_volume': [],
+        'delta_price': [],
+        'curr_bid': [],
+        'curr_ask': [],
+        'curr_date': []
+    }
+
+print(data_dict)
+print('\n-----script inicializado----')
+#fim da inicialização
+perf_s = time.perf_counter()
+
+def get_data(): #c   ta sem atributos de entrada/ lendo direto da variavel global
+
+    for ticker in ticker_list:
+        l_start = time.perf_counter()
+        now = datetime.now()
+        finance = yf(ticker)
+        summary = finance.get_summary_data()
+        print(ticker)
+
+        data_dict[ticker]['curr_price'].append(finance.get_current_price())
+        data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
+        data_dict[ticker]['delta_price'].append(finance.get_current_change())
+        data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
+        data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
+        data_dict[ticker]['curr_date'].append([now.month, now.day, now.minute, now.second])
+        l_finish = time.perf_counter()
+        print(f'loop time {round(l_finish-l_start,3)} seconds...')
+
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
 
 
 
-for i in range(len(ticker_list)):
-    print(i)
-    global file_json
-    date = datetime.now()
-    file_path = './data/'
-    file_name = (str(ticker_list[i])+'@'+str(date.year)+':'+ str(date.month) + ':'+ str(date.day)+':'+str(date.hour)+':'+ str(date.minute)+'.json')
-    file_json.append(open(str(file_path) + str(file_name), 'w'))
-    data = {}
-    data[0] = (str(ticker_list[i])+'@'+str(date.year)+':'+ str(date.month) + ':'+ str(date.day)+':'+str(date.hour)+':'+ str(date.minute))
-    file_json
-    with file_json[i] as outfile:
-        json.dump(data, outfile)
-    return 0
+perf_f = time.perf_counter()
 
-init_data_catcher()
-#print(file_json)
+print(data_dict)
+print(f'\n\nscript finalizado tempo {round(perf_f-perf_s, 3)} seconds...')
 
-f1 = open('test.txt', 'w')
-print(f1.closed)
 
-print(file_json[0].closed)
-iterator = 0
-for t in range(len(ticker_list)):
-
-    finance = yf(ticker_list[t])
-    summary = finance.get_summary_data()
-    now = datetime.now()
-    summary = finance.get_summary_data()
-
-    data = {}
-    data['time'] = return_date()
-    #data['curr_price'] = finance.get_current_price()
-    #data['curr_volume'] = finance.get_current_volume()
-    #data['delta_price'] = finance.get_current_change()
-    #data['curr_bid'] = summary[ticker_list[t]]['bid']
-    #data['curr_ask'] = summary[ticker_list[t]]['ask']
-
-    #print (file_json[t])
-
-    with file_json[t] as outfile:
-        print(outfile)
-"""
-    now = datetime.now(),
-    summary = finance.get_summary_data(),
-    curr_price = finance.get_current_price(),
-    curr_volume = finance.get_current_volume(),
-    delta_price = finance.get_current_change(),
-    curr_bid = summary[t]['bid'],
-    curr_ask = summary[t]['ask'],
-"""
+exit(0)
