@@ -68,9 +68,9 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
 perf_s = time.perf_counter()
 tl_size = len(ticker_list)
 
-for i in range(10):
+while(True):
 
-    print(i)
+    #print(i)
     l_start = time.perf_counter()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
