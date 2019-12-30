@@ -18,7 +18,6 @@ import numpy as np
 import stock_cmpr
 from yahoofinancials import YahooFinancials as yf
 from datetime import datetime
-from tqdm import tqdm
 
 '''
 inicializa o basico:
@@ -68,7 +67,7 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
 perf_s = time.perf_counter()
 tl_size = len(ticker_list)
 
-while(True):
+while(now.hour > 10 and now.hour < 18):
 
     #print(i)
     l_start = time.perf_counter()
