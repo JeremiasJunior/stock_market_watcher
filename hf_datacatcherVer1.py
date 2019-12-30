@@ -49,13 +49,11 @@ print('\n-----script inicializado----')
 perf_s = time.perf_counter()
 
 def get_data(): #c   ta sem atributos de entrada/ lendo direto da variavel global
-
     for ticker in ticker_list:
         l_start = time.perf_counter()
         now = datetime.now()
         finance = yf(ticker)
         summary = finance.get_summary_data()
-        print(ticker)
 
         data_dict[ticker]['curr_price'].append(finance.get_current_price())
         data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
@@ -64,12 +62,10 @@ def get_data(): #c   ta sem atributos de entrada/ lendo direto da variavel globa
         data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
         data_dict[ticker]['curr_date'].append([now.month, now.day, now.minute, now.second])
         l_finish = time.perf_counter()
-        print(f'loop time {round(l_finish-l_start,3)} seconds...')
+        print(f'{ticker}\nloop time {round(l_finish-l_start,3)} seconds...')
+        #c  return f'{ticker} loop time {round(l_finish-l_start, round(3))} seconds...'
 
-
-#c  with concurrent.futures.ThreadPoolExecutor() as executor:
-
-
+get_data()
 
 perf_f = time.perf_counter()
 
