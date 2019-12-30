@@ -67,7 +67,7 @@ def get_data(): #c   ta sem atributos de entrada/ lendo direto da variavel globa
         print(f'loop time {round(l_finish-l_start,3)} seconds...')
 
 
-with concurrent.futures.ThreadPoolExecutor() as executor:
+#c  with concurrent.futures.ThreadPoolExecutor() as executor:
 
 
 
