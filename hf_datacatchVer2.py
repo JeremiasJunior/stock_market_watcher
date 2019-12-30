@@ -18,6 +18,7 @@ import numpy as np
 import stock_cmpr
 from yahoofinancials import YahooFinancials as yf
 from datetime import datetime
+from tqdm import tqdm
 
 '''
 inicializa o basico:
@@ -50,9 +51,7 @@ print(data_dict)
 print('\n-----script inicializado----')
 #fim da inicialização
 
-
 def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel global
-
     now = datetime.now()
     finance = yf(ticker)        
     summary = finance.get_summary_data()
@@ -63,25 +62,31 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
     data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
     data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
     data_dict[ticker]['curr_date'].append([now.month, now.day, now.minute, now.second])
-    return str(ticker) + ' finish...'
+
+    return ticker
+
 perf_s = time.perf_counter()
+tl_size = len(ticker_list)
 
 for i in range(10):
+
     print(i)
     l_start = time.perf_counter()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ticker = ticker_list
         run = [executor.submit(get_data, ticker) for ticker in ticker_list]
-        for f in concurrent.futures. as_completed(run):
-            print(f.result())
+        for f in concurrent.futures.as_completed(run):
+            print(str(f.result()) + ' of ticker ' + str(tl_size))
+            tl_size -= 1
+
     l_finish = time.perf_counter()
     print(f'tempo de lote {round(l_finish-l_start,2)} segundos...')
+    tl_size = len(ticker_list)
 
 perf_f = time.perf_counter()
 
 print(data_dict)
-json.dump(data_dict, f_json, indent=2)
 print(f'\n\nscript finalizado tempo {round(perf_f-perf_s, 2)} segundos...')
 json.dump(data_dict, f_json, )
 
