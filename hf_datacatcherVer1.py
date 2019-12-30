@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 '''
 notas do desenvolvimento
 
@@ -5,7 +7,6 @@ notas do desenvolvimento
 -primeiro vou fazer tudo o mais direto possivel, depois me preocupo com multithread nas funções
 
 '''
-
 
 import time
 import json
