@@ -1,11 +1,7 @@
-f_in = open("NYSE.txt", 'r').readlines()
-f_out = open("NYSE_crop.txt", 'w')
+f_in = open("stock_tickers.csv", 'r').readlines()
+f_out = open("stock_tickers_new.csv", 'w')
 
-j = ''
-for i in f_in:
-    i_ = i.split('\t')[0].split('-')[0].split('.')[0]
-    if(i_ != j):
-        f_out.writelines(i_)
-        f_out.writelines('\n')
-    j = i_
+new_ticker = []
 
+for ticker in f_in:
+    f_out.writelines(str(ticker.split('\n')[0])+'.SA\n')
