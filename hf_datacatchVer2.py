@@ -69,7 +69,7 @@ tl_size = len(ticker_list)
 
 for i in range(5):
 
-    print(+ '\n' + str(i) + '\n')
+    print('\n' + str(i) + '\n')
     l_start = time.perf_counter()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
