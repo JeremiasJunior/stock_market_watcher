@@ -16,6 +16,8 @@ segundo resultado com o VPS de 2 cores, reduziu o tempo pra 413.82 segundos e me
 
 teste com 50 tickers:
 na vps de 2 cores
+no meu pc 122.91 segundos
+na vps z 202.81 segundos
 
 
 '''
