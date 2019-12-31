@@ -67,9 +67,9 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
 perf_s = time.perf_counter()
 tl_size = len(ticker_list)
 
-while(now.hour > 10 and now.hour < 18):
+for i in range(5):
 
-    #print(i)
+    print(+ '\n' + str(i) + '\n')
     l_start = time.perf_counter()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -80,7 +80,7 @@ while(now.hour > 10 and now.hour < 18):
             tl_size -= 1
 
     l_finish = time.perf_counter()
-    print(f'tempo de lote {round(l_finish-l_start,2)} segundos...')
+    print(f'\ntempo de lote {round(l_finish-l_start,2)} segundos...')
     tl_size = len(ticker_list)
 
 perf_f = time.perf_counter()
