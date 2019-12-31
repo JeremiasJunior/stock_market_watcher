@@ -4,8 +4,19 @@
 '''
 notas do desenvolvimento
 
-12/13/2019 - 3:28
+12/30/2019 - 3:28
 -primeiro vou fazer tudo o mais direto possivel, depois me preocupo com multithread nas funções
+
+-12/31/2019 - 14:18
+resultado dos testes com 100 tickers:
+-altamente dependente de quantidade de threads, no meu computador terminei 6 lotes de 100 acoes em 278.28 segundos, o servidor de 1 processador da hetzner levou 810.36 segundos
+-a quantidade de dados gerada num dia não deve passar de uns 2 mb
+
+segundo resultado com o VPS de 2 cores, reduziu o tempo pra 413.82 segundos e meu pc ficou em 206.13 segundos
+
+teste com 50 tickers:
+na vps de 2 cores
+
 
 '''
 
