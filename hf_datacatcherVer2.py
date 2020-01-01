@@ -92,7 +92,7 @@ for i in range(1):
         ticker = ticker_list
         run = [executor.submit(get_data, ticker) for ticker in ticker_list]
         for f in concurrent.futures.as_completed(run):
-            #print(str(f.result()) + ' of ticker ' + str(tl_size))
+            print(str(f.result()) + ' of ticker ' + str(tl_size))
             tl_size -= 1
 
     l_finish = time.perf_counter()
