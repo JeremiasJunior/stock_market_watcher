@@ -34,7 +34,7 @@ import numpy as np
 import stock_cmpr
 from yahoofinancials import YahooFinancials as yf
 from datetime import datetime
-
+import yahoofinancials as YF
 '''
 inicializa o basico:
 
@@ -85,7 +85,11 @@ def data_check(ticker): #c   ta sem atributos de entrada/ lendo direto da variav
 
 def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel global
     now = datetime.now()
-    finance = yf(ticker)        
+    try:
+        finance = yf(ticker)
+    except YF.ManagedException():
+        print('err 404')
+        return ticker
     summary = finance.get_summary_data()
 
     data_dict[ticker]['curr_price'].append(finance.get_current_price())
@@ -95,6 +99,7 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
     data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
     data_dict[ticker]['curr_date'].append([now.minute, now.second])
 
+
     return ticker
 
 perf_s = time.perf_counter()
@@ -103,7 +108,8 @@ t_time = float()
 
 print(now.hour)
 iterator = 0
-while(now.hour > 12 and now.hour < 22):
+#for _ in range(1):
+while(now.hour > 9 and now.hour < 19):
 
     print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
