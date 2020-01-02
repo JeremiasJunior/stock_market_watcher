@@ -64,7 +64,6 @@ for ticker in ticker_list:
         'curr_date': []
     }
 
-print(data_dict)
 print('\n-----script inicializado----')
 #fim da inicialização
 
@@ -104,14 +103,16 @@ perf_s = time.perf_counter()
 tl_size = len(ticker_list)
 t_time = float()
 
-while(now.hour > 13 and now.hour < 21):
+print(now.hour)
+iterator = 0
+while(now.hour >= 13 now.hour =< 21):
 
-    print('\ninicializando lote...\n' + str(i) + '\n')
+    print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ticker = ticker_list
-        run = [executor.submit(get_ticker, ticker) for ticker in ticker_list]
+        run = [executor.submit(get_data, ticker) for ticker in ticker_list]
         for f in concurrent.futures.as_completed(run):
             print(str(f.result()) + ' of ticker ' + str(tl_size))
             tl_size -= 1
@@ -119,6 +120,7 @@ while(now.hour > 13 and now.hour < 21):
     l_finish = time.perf_counter()
     print(f'\nfinalizando lote...\ntempo de lote {round(l_finish-l_start,2)} segundos...')
     tl_size = len(ticker_list)
+    iterator += 1
 
 perf_f = time.perf_counter()
 
