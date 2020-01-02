@@ -105,7 +105,7 @@ t_time = float()
 
 print(now.hour)
 iterator = 0
-while(now.hour >= 13 now.hour =< 21):
+while(now.hour > 12 and now.hour < 22):
 
     print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
@@ -123,9 +123,6 @@ while(now.hour >= 13 now.hour =< 21):
     iterator += 1
 
 perf_f = time.perf_counter()
-
-print(data_dict)
-
 print(f'\n\nscript finalizado tempo {round(perf_f-perf_s, 2)} segundos...')
 
 json.dump(data_dict, f_json, indent=2)
