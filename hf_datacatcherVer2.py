@@ -93,16 +93,31 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
     except:
         print("\n---err 404---\n")
         return ticker
-        ##data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
-        #data_dict[ticker]['delta_price'].append(finance.get_current_change())
+    try:
+        data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
+    except:
+        print("\n---err 404---\n")
+        return ticker
+    try:
+        data_dict[ticker]['delta_price'].append(finance.get_current_change())
+    except:
+        print("\n---err 404---\n")
+        return ticker
     try:
         data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
     except:
         print("\n---err 404---\n")
         return ticker
-        #data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
-        #data_dict[ticker]['curr_date'].append([now.minute, now.second])
-
+    try:
+        data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
+    except:
+        print("\n---err 404---\n")
+        return ticker
+    try:
+        data_dict[ticker]['curr_date'].append([now.minute, now.second])
+    except:
+        print("\n---err 404---\n")
+        return ticker
 
     return ticker
 
@@ -121,9 +136,9 @@ while(now.hour > 9 and now.hour < 21):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ticker = ticker_list
         run = [executor.submit(get_data, ticker) for ticker in ticker_list]
-        for f in concurrent.futures.as_completed(run):
-            print(str(f.result()) + ' of ticker ' + str(tl_size))
-            tl_size -= 1
+        #for f in concurrent.futures.as_completed(run):
+        #    print(str(f.result()) + ' of ticker ' + str(tl_size))
+        #    tl_size -= 1
 
     l_finish = time.perf_counter()
     print(f'\nfinalizando lote...\ntempo de lote {round(l_finish-l_start,2)} segundos...')
