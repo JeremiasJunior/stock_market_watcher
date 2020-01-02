@@ -111,7 +111,7 @@ while(now.hour > 13 and now.hour < 21):
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ticker = ticker_list
-        run = [executor.submit(data_check, ticker) for ticker in ticker_list]
+        run = [executor.submit(get_ticker, ticker) for ticker in ticker_list]
         for f in concurrent.futures.as_completed(run):
             print(str(f.result()) + ' of ticker ' + str(tl_size))
             tl_size -= 1
