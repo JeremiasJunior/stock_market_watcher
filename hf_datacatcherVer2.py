@@ -90,14 +90,19 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
     summary = finance.get_summary_data()
     try:
         data_dict[ticker]['curr_price'].append(finance.get_current_price())
-        data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
-        data_dict[ticker]['delta_price'].append(finance.get_current_change())
-        data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
-        data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
-        data_dict[ticker]['curr_date'].append([now.minute, now.second])
     except:
         print("\n---err 404---\n")
         return ticker
+        ##data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
+        #data_dict[ticker]['delta_price'].append(finance.get_current_change())
+    try:
+        data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
+    except:
+        print("\n---err 404---\n")
+        return ticker
+        #data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
+        #data_dict[ticker]['curr_date'].append([now.minute, now.second])
+
 
     return ticker
 
@@ -108,7 +113,7 @@ t_time = float()
 print(now.hour)
 iterator = 0
 #for _ in range(1):
-while(now.hour > 9 and now.hour < 19):
+while(now.hour > 9 and now.hour < 21):
 
     print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
