@@ -85,9 +85,16 @@ def data_check(ticker): #c   ta sem atributos de entrada/ lendo direto da variav
 
 def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel global
     now = datetime.now()
-
-    finance = yf(ticker)
-    summary = finance.get_summary_data()
+    try:
+        finance = yf(ticker)
+    except:
+        print("\n---err 404---\n")
+        return ticker
+    try:
+        summary = finance.get_summary_data()
+    except:
+        print("\n---err 404---\n")
+        return ticker
     try:
         data_dict[ticker]['curr_price'].append(finance.get_current_price())
     except:
