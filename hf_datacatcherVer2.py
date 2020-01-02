@@ -51,6 +51,8 @@ f_dir = './data/'+str(f_name)+'.json'
 f_json = open(f_dir,'w+')
 
 data_dict = collections.defaultdict(list)
+new_dict = collections.defaultdict(list)
+
 
 for ticker in ticker_list:
     data_dict[ticker] = {
@@ -65,6 +67,24 @@ for ticker in ticker_list:
 print(data_dict)
 print('\n-----script inicializado----')
 #fim da inicialização
+
+perf_s = time.perf_counter()
+tl_size = len(ticker_list)
+t_time = float()
+
+#new_file = open('ticker8.csv', 'w')
+
+def data_check(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel global
+    now = datetime.now()
+    finance = yf(ticker)
+    #summary = finance.get_summary_data()
+
+    if(finance.get_current_price() < 8):
+        new_file.write(str(ticker) + '\n')
+
+    return ticker
+
+
 
 def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel global
     now = datetime.now()
@@ -83,14 +103,15 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
 perf_s = time.perf_counter()
 tl_size = len(ticker_list)
 t_time = float()
-for i in range(1):
+
+while(now.hour > 13 and now.hour < 21):
 
     print('\ninicializando lote...\n' + str(i) + '\n')
     l_start = time.perf_counter()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ticker = ticker_list
-        run = [executor.submit(get_data, ticker) for ticker in ticker_list]
+        run = [executor.submit(data_check, ticker) for ticker in ticker_list]
         for f in concurrent.futures.as_completed(run):
             print(str(f.result()) + ' of ticker ' + str(tl_size))
             tl_size -= 1
@@ -102,10 +123,8 @@ for i in range(1):
 perf_f = time.perf_counter()
 
 print(data_dict)
+
 print(f'\n\nscript finalizado tempo {round(perf_f-perf_s, 2)} segundos...')
-t_time = round(perf_f-perf_s, 2)
-with open('output.txt', 'w+') as fp:
-    fp.write(str(t_time))
 
 json.dump(data_dict, f_json, indent=2)
 
