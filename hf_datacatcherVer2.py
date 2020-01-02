@@ -142,7 +142,11 @@ while(now.hour > 9 and now.hour < 21):
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ticker = ticker_list
-        run = [executor.submit(get_data, ticker) for ticker in ticker_list]
+        try:
+            run = [executor.submit(get_data, ticker) for ticker in ticker_list]
+        except:
+            print('--err master 404--')
+            pass
         for f in concurrent.futures.as_completed(run):
             print(str(f.result()) + ' of ticker ' + str(tl_size))
             tl_size -= 1
