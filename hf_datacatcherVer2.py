@@ -145,7 +145,7 @@ while(now.hour > 9 and now.hour < 21):
         try:
             run = [executor.submit(get_data, ticker) for ticker in ticker_list]
         except:
-            print('--err master 404--')
+            print('--err master  404--')
             pass
         for f in concurrent.futures.as_completed(run):
             print(str(f.result()) + ' of ticker ' + str(tl_size))
