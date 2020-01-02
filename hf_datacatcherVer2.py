@@ -88,14 +88,16 @@ def get_data(ticker): #c   ta sem atributos de entrada/ lendo direto da variavel
 
     finance = yf(ticker)
     summary = finance.get_summary_data()
-
-    #data_dict[ticker]['curr_price'].append(finance.get_current_price())
-    #data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
-    #data_dict[ticker]['delta_price'].append(finance.get_current_change())
-    #data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
-    #data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
-    #data_dict[ticker]['curr_date'].append([now.minute, now.second])
-
+    try:
+        data_dict[ticker]['curr_price'].append(finance.get_current_price())
+        data_dict[ticker]['curr_volume'].append(finance.get_current_volume())
+        data_dict[ticker]['delta_price'].append(finance.get_current_change())
+        data_dict[ticker]['curr_bid'].append(summary[ticker]['bid'])
+        data_dict[ticker]['curr_ask'].append(summary[ticker]['ask'])
+        data_dict[ticker]['curr_date'].append([now.minute, now.second])
+    except:
+        print("\n---err 404---\n")
+        return ticker
 
     return ticker
 
