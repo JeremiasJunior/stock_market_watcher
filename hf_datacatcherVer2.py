@@ -51,8 +51,6 @@ f_dir = './data/'+str(f_name)+'.json'
 f_json = open(f_dir,'w+')
 
 data_dict = collections.defaultdict(list)
-new_dict = collections.defaultdict(list)
-
 
 for ticker in ticker_list:
     data_dict[ticker] = {
