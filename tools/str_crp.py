@@ -1,4 +1,4 @@
-f_in = open("stock_tickers.csv", 'r').readlines()
+f_in = open("../data_catcher/stock_tickers.csv", 'r').readlines()
 f_out = open("stock_tickers_new.csv", 'w')
 
 new_ticker = []
