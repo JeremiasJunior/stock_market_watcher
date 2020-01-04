@@ -30,6 +30,8 @@ import time
 import json
 import concurrent.futures
 import collections
+import sys
+sys.path.append('../')
 from lib import stock_cmpr
 from yahoofinancials import YahooFinancials as yf
 from datetime import datetime
@@ -133,7 +135,7 @@ t_time = float()
 
 print(now.hour)
 iterator = 0
-for _ in range(5):
+for _ in range(100):
 
     print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
