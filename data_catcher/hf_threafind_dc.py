@@ -133,8 +133,7 @@ t_time = float()
 
 print(now.hour)
 iterator = 0
-#for _ in range(1):
-while(now.hour > 9 and now.hour < 21):
+for _ in range(5):
 
     print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
