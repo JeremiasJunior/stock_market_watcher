@@ -167,7 +167,11 @@ for i in range(0, len(subiu_desceu_real)):
         acc.append(0)
 
 total_acc = (sum(acc) / len(acc)) * 100
+<<<<<<< HEAD
 print("A precisão total da rede é de {}%".format(total_acc))
+=======
+print("A precisão total da rede é de {}%",format(total_acc))
+>>>>>>> 3bfcff728b760a8dbe48e4fb2c39a2593d84f0da
 
 a1 = end - start
 minute = int(a1 / 60)
