@@ -9,11 +9,8 @@ notas do desenvolvimento
 '''
 
 import time
-import json
-import concurrent.futures
 import collections
-import numpy as np
-import stock_cmpr
+from lib import stock_cmpr
 from yahoofinancials import YahooFinancials as yf
 from datetime import datetime
 

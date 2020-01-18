@@ -30,11 +30,12 @@ import time
 import json
 import concurrent.futures
 import collections
-import numpy as np
-import stock_cmpr
+import sys
+sys.path.append('../')
+from lib import stock_cmpr
 from yahoofinancials import YahooFinancials as yf
 from datetime import datetime
-import yahoofinancials as YF
+
 '''
 inicializa o basico:
 
@@ -47,7 +48,7 @@ inicializa o basico:
 ticker_list = stock_cmpr.load_ticker_list('stock_tickers.csv')
 now = datetime.now()
 f_name = (str(now.year) + '-' + str(now.month)+'-'+str(now.day)+'@'+str(now.hour)+'-'+str(now.minute))
-f_dir = './data/'+str(f_name)+'.json'
+f_dir = './data_output/'+str(f_name)+'.json'
 f_json = open(f_dir,'w+')
 
 data_dict = collections.defaultdict(list)
@@ -134,8 +135,7 @@ t_time = float()
 
 print(now.hour)
 iterator = 0
-#for _ in range(1):
-while(now.hour > 9 and now.hour < 21):
+for _ in range(100):
 
     print('\ninicializando lote...\n' + str(iterator) + '\n')
     l_start = time.perf_counter()
