@@ -8,7 +8,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
+os.chdir('/home/gbson/Downloads/Recurrent_Neural_Networks/')
 # Importing the training set
 dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
 training_set = dataset_train.iloc[:, 1:2].values
@@ -106,3 +108,57 @@ plt.xlabel('Time')
 plt.ylabel('Google Stock Price')
 plt.legend()
 plt.show()
+
+# calculating the accuracy of the model
+predicted_dia_anterior = []
+for i in range(0, len(predicted_stock_price) - 1):
+    predicted_dia_anterior.append(predicted_stock_price[i])
+predicted_dia_anterior = np.array(predicted_dia_anterior)
+
+predicted_dia_posterior = []
+for i in range(1, len(predicted_stock_price)):
+    predicted_dia_posterior.append(predicted_stock_price[i])
+predicted_dia_posterior = np.array(predicted_dia_posterior)
+
+var_sd = predicted_dia_posterior - predicted_dia_anterior
+
+subiu_desceu_predicted = []
+for i in range(0, len(var_sd)):
+    if (var_sd[i] > 0):
+        subiu_desceu_predicted.append(1)
+    elif (var_sd[i] < 0):
+        subiu_desceu_predicted.append(0)
+    elif (var_sd[i] == 0):
+        subiu_desceu_predicted.append('no variance')
+
+
+
+predicted_dia_anterior_real = []
+for i in range(0, len(real_stock_price) - 1):
+    predicted_dia_anterior_real.append(real_stock_price[i])
+predicted_dia_anterior_real = np.array(predicted_dia_anterior_real)
+
+predicted_dia_posterior_real = []
+for i in range(1, len(real_stock_price)):
+    predicted_dia_posterior_real.append(real_stock_price[i])
+predicted_dia_posterior_real = np.array(predicted_dia_posterior_real)
+
+var_sd_real = predicted_dia_posterior_real - predicted_dia_anterior_real
+
+subiu_desceu_real = []
+for i in range(0, len(var_sd_real)):
+    if (var_sd_real[i] > 0):
+        subiu_desceu_real.append(1)
+    elif (var_sd_real[i] < 0):
+        subiu_desceu_real.append(0)
+    elif (var_sd_real[i] == 0):
+        subiu_desceu_real.append('no variance')
+        
+acc = []
+for i in range(0, len(subiu_desceu_real)):
+    if (subiu_desceu_real[i] == subiu_desceu_predicted[i]):
+        acc.append(1)
+    else:
+        acc.append(0)
+
+total_acc = (sum(acc) / len(acc)) * 100
