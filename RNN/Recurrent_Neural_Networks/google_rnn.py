@@ -10,8 +10,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import time
-
+'''
 os.chdir('/home/gbson/Downloads/Recurrent_Neural_Networks/')
+'''
 # Importing the training set
 dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
 training_set = dataset_train.iloc[:, 1:2].values
@@ -166,7 +167,7 @@ for i in range(0, len(subiu_desceu_real)):
         acc.append(0)
 
 total_acc = (sum(acc) / len(acc)) * 100
-total_acc
+print("A precisão total da rede é de {}%".format(total_acc))
 
 a1 = end - start
 minute = int(a1 / 60)
