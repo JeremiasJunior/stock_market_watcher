@@ -78,7 +78,8 @@ regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
 end = time.time()
 
 demora = end - start
-print("a rede demorou {} segundos e {} minuto(s) para ser treinada".format(demora, minute = int(demora / 60)))
+minute = int(demora / 60)
+print("a rede demorou {} segundos e {} minuto(s) para ser treinada".format(demora, minute))
 
 inputs = X_test
 inputs = inputs.reshape(-1,1)
