@@ -14,12 +14,14 @@ sys.stdout = f
 
 
 timesteps = 60
-indicators = 1
+indicators = 1 # ou utilize 'training_set.shape[1]' para saber quantos indicadores
 drop = 0.2
 optmizer = 'RMSprop'
 loss = 'mean_squared_error'  
 epochs = 100
 batch_size = 32
+
+dataset_size = 300
 
 print("'{}' timestep(s); '{}' indicator(s); '{}' dropout; '{}' optmizer; '{}' loss calculation; {} epoch(s) and {} batch_size".format(timesteps,
       indicators, drop, optmizer, loss, epochs, batch_size))
@@ -41,36 +43,32 @@ MSFT.isnull().values.any()
 
 dataset = MSFT
 
+dataset = dataset.iloc[:dataset_size,:]
+
+# training set
+data = dataset.iloc[: ,3:4].values
+
+
+# tamanho do test_set
+size_of_test_set = 20
+size_of_training_set = len(data) - size_of_test_set
+
+
+
+
+training_set = data[:size_of_training_set]
+
 # scaling
 from sklearn.preprocessing import MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
 
-
-data = dataset.iloc[: ,3]
-data = np.array(data)
-data = data.reshape(-1,1)
-
-dataset_scaled = sc.fit_transform(data)
-
-y1 = dataset_scaled
-X1 = dataset_scaled
-
-# separando testes
-y_test = y1[len(y1) - 120:]
-X_test = X1[len(X1) - 180:]
-
-
-
-y = y1[:len(y1) - 120]
-X = X1[:len(X1) - 120]
-
+training_set_scaled = sc.fit_transform(training_set)
 
 X_train = [] 
 y_train = [] 
-for i in range(timesteps, len(X)):
-    X_train.append(X[i-timesteps:i]) # me pergunto se os primeiros 60 valores de y são usados
-    # já que não há 60 valores de X atrás deles
-    y_train.append(y[i])
+for i in range(timesteps, len(training_set_scaled)):
+    X_train.append(training_set_scaled[i-timesteps:i]) 
+    y_train.append(training_set_scaled[i])
 X_train, y_train = np.array(X_train), np.array(y_train)
 
 # Reshaping
@@ -102,8 +100,14 @@ demora = end - start
 minute = int(demora / 60)
 print("a rede demorou {} segundos ou {} minuto(s) para ser treinada".format(demora, minute))
 
-inputs = X_test
+
+test_set = data[len(data) - size_of_test_set:]
+real_stock_price = test_set
+
+# X_test
+inputs = data[len(data) - timesteps - size_of_test_set:]
 inputs = inputs.reshape(-1,1)
+inputs = sc.transform(inputs)
 
 X_test = []
 for i in range(timesteps, len(inputs)):
@@ -113,7 +117,7 @@ X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], indicators))
 predicted_stock_price = regressor.predict(X_test)
 predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 
-real_stock_price = y_test
+
 
 plt.plot(real_stock_price, color = 'red', label = 'Real Google Stock Price')
 plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted Google Stock Price')
@@ -218,8 +222,8 @@ def build_regressor(optimizer):
 # Keras nos recomenda RMSprop como optimizer de RNNs, porém 'adam' tem melhor
 # performance neste modelo
 regressor = KerasClassifier(build_fn = build_regressor)
-parameters = {'batch_size': [12, 24, 36, 48, 60],
-              'epochs': [100, 250, 500, 750, 1000],
+parameters = {'batch_size': [16, 32, 48],
+              'epochs': [100, 250 ,500],
               'optimizer': ['adam', 'rmsprop']}
 
 print('tunning parameters =', parameters)
