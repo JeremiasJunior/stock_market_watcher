@@ -22,9 +22,9 @@ from stockstats import StockDataFrame as Sdf
 import pandas_datareader.data as web
 import os
 import time
-'''
+
 os.chdir('/home/gbson/Desktop/')
-'''
+
 # preprocessing
 MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 
@@ -37,7 +37,10 @@ from sklearn.preprocessing import MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
 
 
-data = dataset[: ,3]
+data = dataset.iloc[: ,3]
+data = np.array(data)
+data = data.reshape(-1,1)
+
 dataset_scaled = sc.fit_transform(data)
 
 y1 = dataset_scaled
@@ -88,7 +91,7 @@ end = time.time()
 
 demora = end - start
 minute = int(demora / 60)
-print("a rede demorou {} segundos e {} minuto(s) para ser treinada".format(demora, minute))
+print("a rede demorou {} segundos ou {} minuto(s) para ser treinada".format(demora, minute))
 
 inputs = X_test
 inputs = inputs.reshape(-1,1)
