@@ -5,6 +5,13 @@ Created on Sat Jan 18 06:32:17 2020
 
 @author: gbson
 """
+import sys
+
+# salvando outputs deste script
+orig_stdout = sys.stdout
+f = open('long_train_little_output.txt', 'w')
+sys.stdout = f
+
 
 timesteps = 60
 indicators = 1
@@ -14,6 +21,8 @@ loss = 'mean_squared_error'
 epochs = 100
 batch_size = 32
 
+print("'{}' timestep(s); '{}' indicator(s); '{}' dropout; '{}' optmizer; '{}' loss calculation; {} epoch(s) and {} batch_size".format(timesteps,
+      indicators, drop, optmizer, loss, epochs, batch_size))
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -37,7 +46,10 @@ from sklearn.preprocessing import MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
 
 
-data = dataset[: ,3]
+data = dataset.iloc[: ,3]
+data = np.array(data)
+data = data.reshape(-1,1)
+
 dataset_scaled = sc.fit_transform(data)
 
 y1 = dataset_scaled
@@ -88,7 +100,7 @@ end = time.time()
 
 demora = end - start
 minute = int(demora / 60)
-print("a rede demorou {} segundos e {} minuto(s) para ser treinada".format(demora, minute))
+print("a rede demorou {} segundos ou {} minuto(s) para ser treinada".format(demora, minute))
 
 inputs = X_test
 inputs = inputs.reshape(-1,1)
@@ -173,6 +185,7 @@ print("A RNN demorou {} segundos ou {} minuto(s) para treinar".format(a1, minute
 
 
 # Tunning the RNN
+print("\n initializing RNN Tunning... \n")
 from sklearn.model_selection import cross_val_score
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import GridSearchCV
@@ -184,7 +197,7 @@ from keras.layers import Dropout
 def build_regressor(optimizer):
     regressor = Sequential()
 
-    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], 83))) # 83 inputs
+    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], 1))) # 83 inputs
     regressor.add(Dropout(0.2))
 
     regressor.add(LSTM(units = 50, return_sequences = True))
@@ -209,6 +222,8 @@ parameters = {'batch_size': [12, 24, 36, 48, 60],
               'epochs': [100, 250, 500, 750, 1000],
               'optimizer': ['adam', 'rmsprop']}
 
+print('tunning parameters =', parameters)
+
 grid_search = GridSearchCV(estimator = regressor,
                            param_grid = parameters,
                            scoring = 'neg_mean_squared_error',
@@ -228,3 +243,6 @@ print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning
 
 print('best parameters = {}'.format(best_parameters))
 print('best accuracy = {}'.format(best_accuracy))
+
+sys.stdout = orig_stdout
+f.close()
