@@ -5,248 +5,191 @@ Created on Sat Jan 18 06:32:17 2020
 
 @author: gbson
 """
+'''
 import sys
 
 # salvando outputs deste script
 orig_stdout = sys.stdout
 f = open('long_train_little_output.txt', 'w')
 sys.stdout = f
-
-
-timesteps = 60
-indicators = 1 # ou utilize 'training_set.shape[1]' para saber quantos indicadores
-drop = 0.2
-optmizer = 'RMSprop'
-loss = 'mean_squared_error'  
-epochs = 100
-batch_size = 32
-
-dataset_size = 300
-
-print("'{}' timestep(s); '{}' indicator(s); '{}' dropout; '{}' optmizer; '{}' loss calculation; {} epoch(s) and {} batch_size".format(timesteps,
-      indicators, drop, optmizer, loss, epochs, batch_size))
-
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from stockstats import StockDataFrame as Sdf
-import pandas_datareader.data as web
-import os
-import time
 '''
-os.chdir('/home/gbson/Desktop/')
-'''
-# preprocessing
-MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
+acc_list = []
 
-MSFT.isnull().values.any()
+for i in range(0,10):
+    
 
-dataset = MSFT
+    timesteps = 60
+    indicators = 1 # ou utilize 'training_set.shape[1]' para saber quantos indicadores
+    drop = 0.2
+    optmizer = 'RMSprop'
+    loss = 'mean_squared_error'  
+    epochs = 100
+    batch_size = 32
 
-dataset = dataset.iloc[:dataset_size,:]
+    dataset_size = 500
 
-# training set
-data = dataset.iloc[: ,3:4].values
+    print("'{}' timestep(s); '{}' indicator(s); '{}' dropout; '{}' optmizer; '{}' loss calculation; {} epoch(s) and {} batch_size".format(timesteps,indicators, drop, optmizer, loss, epochs, batch_size))
 
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from stockstats import StockDataFrame as Sdf
+    import pandas_datareader.data as web
+    import os
+    import time
+    '''
+    os.chdir('/home/gbson/Desktop/')
+    '''
+    # preprocessing
+    MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 
-# tamanho do test_set
-size_of_test_set = 20
-size_of_training_set = len(data) - size_of_test_set
+    MSFT.isnull().values.any()
 
+    dataset = MSFT
 
+    dataset = dataset.iloc[:dataset_size,:]
 
-
-training_set = data[:size_of_training_set]
-
-# scaling
-from sklearn.preprocessing import MinMaxScaler
-sc = MinMaxScaler(feature_range = (0, 1))
-
-training_set_scaled = sc.fit_transform(training_set)
-
-X_train = [] 
-y_train = [] 
-for i in range(timesteps, len(training_set_scaled)):
-    X_train.append(training_set_scaled[i-timesteps:i]) 
-    y_train.append(training_set_scaled[i])
-X_train, y_train = np.array(X_train), np.array(y_train)
-
-# Reshaping
-X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], indicators)) 
-
-
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers import Dropout
-
-regressor = Sequential()
-regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], indicators )))
-regressor.add(Dropout(drop))
-regressor.add(LSTM(units = 50, return_sequences = True))
-regressor.add(Dropout(drop))
-regressor.add(LSTM(units = 50, return_sequences = True))
-regressor.add(Dropout(drop))
-regressor.add(LSTM(units = 50)) 
-regressor.add(Dropout(drop))
-regressor.add(Dense(units = 1)) 
-regressor.compile(optimizer = optmizer, loss = loss)
-
-start = time.time()
-regressor.fit(X_train, y_train, epochs = epochs, batch_size = batch_size)
-end = time.time()
-
-demora = end - start
-minute = int(demora / 60)
-print("a rede demorou {} segundos ou {} minuto(s) para ser treinada".format(demora, minute))
+    # training set
+    data = dataset.iloc[: ,3:4].values
 
 
-test_set = data[len(data) - size_of_test_set:]
-real_stock_price = test_set
-
-# X_test
-inputs = data[len(data) - timesteps - size_of_test_set:]
-inputs = inputs.reshape(-1,1)
-inputs = sc.transform(inputs)
-
-X_test = []
-for i in range(timesteps, len(inputs)):
-    X_test.append(inputs[i-timesteps:i, 0])
-X_test = np.array(X_test)
-X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], indicators))
-predicted_stock_price = regressor.predict(X_test)
-predicted_stock_price = sc.inverse_transform(predicted_stock_price)
+    # tamanho do test_set
+    size_of_test_set = 20
+    size_of_training_set = len(data) - size_of_test_set
 
 
 
-plt.plot(real_stock_price, color = 'red', label = 'Real Google Stock Price')
-plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted Google Stock Price')
-plt.title('Google Stock Price Prediction')
-plt.xlabel('Time')
-plt.ylabel('Google Stock Price')
-plt.legend()
-plt.savefig('msft_long_train.png')
 
-# calculating the accuracy of the model
-predicted_dia_anterior = []
-for i in range(0, len(predicted_stock_price) - 1):
-    predicted_dia_anterior.append(predicted_stock_price[i])
-predicted_dia_anterior = np.array(predicted_dia_anterior)
+    training_set = data[:size_of_training_set]
 
-predicted_dia_posterior = []
-for i in range(1, len(predicted_stock_price)):
-    predicted_dia_posterior.append(predicted_stock_price[i])
-predicted_dia_posterior = np.array(predicted_dia_posterior)
+    # scaling
+    from sklearn.preprocessing import MinMaxScaler
+    sc = MinMaxScaler(feature_range = (0, 1))
 
-var_sd = predicted_dia_posterior - predicted_dia_anterior
+    training_set_scaled = sc.fit_transform(training_set)
 
-subiu_desceu_predicted = []
-for i in range(0, len(var_sd)):
-    if (var_sd[i] > 0):
-        subiu_desceu_predicted.append(1)
-    elif (var_sd[i] < 0):
-        subiu_desceu_predicted.append(0)
-    elif (var_sd[i] == 0):
-        subiu_desceu_predicted.append('no variance')
+    X_train = [] 
+    y_train = [] 
+    for i in range(timesteps, len(training_set_scaled)):
+        X_train.append(training_set_scaled[i-timesteps:i]) 
+        y_train.append(training_set_scaled[i])
+    X_train, y_train = np.array(X_train), np.array(y_train)
+
+    # Reshaping
+    X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], indicators)) 
 
 
+    from keras.models import Sequential
+    from keras.layers import Dense
+    from keras.layers import LSTM
+    from keras.layers import Dropout
 
-predicted_dia_anterior_real = []
-for i in range(0, len(real_stock_price) - 1):
-    predicted_dia_anterior_real.append(real_stock_price[i])
-predicted_dia_anterior_real = np.array(predicted_dia_anterior_real)
-
-predicted_dia_posterior_real = []
-for i in range(1, len(real_stock_price)):
-    predicted_dia_posterior_real.append(real_stock_price[i])
-predicted_dia_posterior_real = np.array(predicted_dia_posterior_real)
-
-var_sd_real = predicted_dia_posterior_real - predicted_dia_anterior_real
-
-subiu_desceu_real = []
-for i in range(0, len(var_sd_real)):
-    if (var_sd_real[i] > 0):
-        subiu_desceu_real.append(1)
-    elif (var_sd_real[i] < 0):
-        subiu_desceu_real.append(0)
-    elif (var_sd_real[i] == 0):
-        subiu_desceu_real.append('no variance')
-        
-acc = []
-for i in range(0, len(subiu_desceu_real)):
-    if (subiu_desceu_real[i] == subiu_desceu_predicted[i]):
-        acc.append(1)
-    else:
-        acc.append(0)
-
-total_acc = (sum(acc) / len(acc)) * 100
-print('a precisão deste modelo é de {}%'.format(total_acc))
-
-a1 = end - start
-minute = int(a1 / 60)
-
-print("A RNN demorou {} segundos ou {} minuto(s) para treinar".format(a1, minute))
-
-
-# Tunning the RNN
-print("\n initializing RNN Tunning... \n")
-from sklearn.model_selection import cross_val_score
-from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.model_selection import GridSearchCV
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers import Dropout
-
-def build_regressor(optimizer):
     regressor = Sequential()
-
-    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], 1))) # 83 inputs
-    regressor.add(Dropout(0.2))
-
+    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], indicators )))
+    regressor.add(Dropout(drop))
     regressor.add(LSTM(units = 50, return_sequences = True))
-    regressor.add(Dropout(0.2))
-
+    regressor.add(Dropout(drop))
     regressor.add(LSTM(units = 50, return_sequences = True))
-    regressor.add(Dropout(0.2))
+    regressor.add(Dropout(drop))
+    regressor.add(LSTM(units = 50)) 
+    regressor.add(Dropout(drop))
+    regressor.add(Dense(units = 1)) 
+    regressor.compile(optimizer = optmizer, loss = loss)
 
-    regressor.add(LSTM(units = 50)) # não retorna nenhum valor para o início da NN
-    regressor.add(Dropout(0.2))
+    start = time.time()
+    regressor.fit(X_train, y_train, epochs = epochs, batch_size = batch_size)
+    end = time.time()
 
-    regressor.add(Dense(units = 1)) # units = 1 | pois só queremos 1 output
+    demora = end - start
+    minute = int(demora / 60)
+    print("a rede demorou {} segundos ou {} minuto(s) para ser treinada".format(demora, minute))
 
-    regressor.compile(optimizer = 'RMSprop', loss = 'mean_squared_error')
-    return regressor
-# loss = 'mean_squared_error' | pois estamos fazendo uma regressão
 
-# Keras nos recomenda RMSprop como optimizer de RNNs, porém 'adam' tem melhor
-# performance neste modelo
-regressor = KerasClassifier(build_fn = build_regressor)
-parameters = {'batch_size': [16, 32, 48],
-              'epochs': [100, 250 ,500],
-              'optimizer': ['adam', 'rmsprop']}
+    test_set = data[len(data) - size_of_test_set:]
+    real_stock_price = test_set
 
-print('tunning parameters =', parameters)
+    # X_test
+    inputs = data[len(data) - timesteps - size_of_test_set:]
+    inputs = inputs.reshape(-1,1)
+    inputs = sc.transform(inputs)
 
-grid_search = GridSearchCV(estimator = regressor,
-                           param_grid = parameters,
-                           scoring = 'neg_mean_squared_error',
-                           cv = 10)
-start1 = time.time()
-grid_search = grid_search.fit(X_train, y_train)
-end1 = time.time()
+    X_test = []
+    for i in range(timesteps, len(inputs)):
+        X_test.append(inputs[i-timesteps:i, 0])
+    X_test = np.array(X_test)
+    X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], indicators))
+    predicted_stock_price = regressor.predict(X_test)
+    predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 
-tunning_time = end1 - start1
 
-best_parameters = grid_search.best_params_
-best_accuracy = grid_search.best_score_
 
-minute1 = int(tunning_time / 60)
+    plt.plot(real_stock_price, color = 'red', label = 'Real Google Stock Price')
+    plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted Google Stock Price')
+    plt.title('Google Stock Price Prediction')
+    plt.xlabel('Time')
+    plt.ylabel('Google Stock Price')
+    plt.legend()
+    plt.savefig('msft_long_train.png')
 
-print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning_time, minute1))
+    # calculating the accuracy of the model
+    predicted_dia_anterior = []
+    for i in range(0, len(predicted_stock_price) - 1):
+        predicted_dia_anterior.append(predicted_stock_price[i])
+    predicted_dia_anterior = np.array(predicted_dia_anterior)
 
-print('best parameters = {}'.format(best_parameters))
-print('best accuracy = {}'.format(best_accuracy))
+    predicted_dia_posterior = []
+    for i in range(1, len(predicted_stock_price)):
+        predicted_dia_posterior.append(predicted_stock_price[i])
+    predicted_dia_posterior = np.array(predicted_dia_posterior)
 
-sys.stdout = orig_stdout
-f.close()
+    var_sd = predicted_dia_posterior - predicted_dia_anterior
+
+    subiu_desceu_predicted = []
+    for i in range(0, len(var_sd)):
+        if (var_sd[i] > 0):
+            subiu_desceu_predicted.append(1)
+        elif (var_sd[i] < 0):
+            subiu_desceu_predicted.append(0)
+        elif (var_sd[i] == 0):
+            subiu_desceu_predicted.append('no variance')
+
+
+
+    predicted_dia_anterior_real = []
+    for i in range(0, len(real_stock_price) - 1):
+        predicted_dia_anterior_real.append(real_stock_price[i])
+    predicted_dia_anterior_real = np.array(predicted_dia_anterior_real)
+
+    predicted_dia_posterior_real = []
+    for i in range(1, len(real_stock_price)):
+        predicted_dia_posterior_real.append(real_stock_price[i])
+    predicted_dia_posterior_real = np.array(predicted_dia_posterior_real)
+
+    var_sd_real = predicted_dia_posterior_real - predicted_dia_anterior_real
+
+    subiu_desceu_real = []
+    for i in range(0, len(var_sd_real)):
+        if (var_sd_real[i] > 0):
+            subiu_desceu_real.append(1)
+        elif (var_sd_real[i] < 0):
+            subiu_desceu_real.append(0)
+        elif (var_sd_real[i] == 0):
+            subiu_desceu_real.append('no variance')
+        
+    acc = []
+    for i in range(0, len(subiu_desceu_real)):
+        if (subiu_desceu_real[i] == subiu_desceu_predicted[i]):
+            acc.append(1)
+        else:
+            acc.append(0)
+
+    total_acc = (sum(acc) / len(acc)) * 100
+    print('a precisão deste modelo é de {}%'.format(total_acc))
+
+    a1 = end - start
+    minute = int(a1 / 60)
+
+    print("A RNN demorou {} segundos ou {} minuto(s) para treinar".format(a1, minute))
+
+acc_real = sum(acc_list) / len(acc_list)
+print("a precisão real da RNN é de {}%.".format(acc_real))
