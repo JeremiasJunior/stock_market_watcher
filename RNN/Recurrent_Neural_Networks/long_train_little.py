@@ -13,6 +13,19 @@ orig_stdout = sys.stdout
 f = open('long_train_little_output.txt', 'w')
 sys.stdout = f
 '''
+import time
+
+timesteps = 60
+indicators = 1
+drop = 0.2
+optmizer = 'RMSprop'
+loss = 'mean_squared_error'
+epochs = 100
+batch_size = 32
+dataset_size = 500
+size_of_test_set = 20
+
+start01 = time.time()
 acc_list = []
 
 for i in range(0,10):
@@ -123,11 +136,11 @@ for i in range(0,10):
 
 
 
-    plt.plot(real_stock_price, color = 'red', label = 'Real Google Stock Price')
-    plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted Google Stock Price')
-    plt.title('Google Stock Price Prediction')
+    plt.plot(real_stock_price, color = 'red', label = 'Real MSFT Stock Price')
+    plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted MSFT Stock Price')
+    plt.title('MSFT Stock Price Prediction')
     plt.xlabel('Time')
-    plt.ylabel('Google Stock Price')
+    plt.ylabel('MSFT Stock Price')
     plt.legend()
     plt.savefig('msft_long_train.png')
 
@@ -184,6 +197,8 @@ for i in range(0,10):
             acc.append(0)
 
     total_acc = (sum(acc) / len(acc)) * 100
+    acc_list.append(total_acc)
+
     print('a precisão deste modelo é de {}%'.format(total_acc))
 
     a1 = end - start
@@ -191,5 +206,28 @@ for i in range(0,10):
 
     print("A RNN demorou {} segundos ou {} minuto(s) para treinar".format(a1, minute))
 
+end01 = time.time()
+
+end_of_train = end01 - start01
+minute01 = int(end_of_train / 60)
+
+import sys
+orig_stdout = sys.stdout
+f = open('MSFT_analysis_1', 'w')
+sys.stdout = f
+
+print("\nPrinting report of MSFT stock analysis:\n")
+print("This code finished in {} seconds and {} minute(s).".format(end_of_train, minute01))
+
+end_of_train1 = end_of_train / len(acc_list)
+minute02 = minute01 / len(acc_list)
+
+print("Each train session spend {} seconds and {} minute(s)".format(end_of_train1, minute02))
+
 acc_real = sum(acc_list) / len(acc_list)
+
+print("RNN com parâmetros. timesteps = {}; indicators = {}; drop = {}; optimizer = {}; loss = {}; epochs = {}; batch_size = {}; dataset_size = {}; size_of_test_set = {}".format(timesteps, indicators, drop, optmizer, loss, epochs, batch_size, dataset_size, size_of_test_set))
 print("a precisão real da RNN é de {}%.".format(acc_real))
+
+sys.stdout = orig_stdout
+f.close()
