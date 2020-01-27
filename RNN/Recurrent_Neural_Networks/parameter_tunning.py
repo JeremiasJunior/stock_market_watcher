@@ -5,8 +5,21 @@ Created on Sat Jan 25 18:04:53 2020
 
 @author: gbson
 """
+import sys
+orig_stdout = sys.stdout
+f = open('MSFT_analysis_2_output', 'w')
+sys.stdout = f
+
+
 timesteps = 60
 indicators = 1
+drop = 0.2
+optmizer = 'RMSprop'
+loss = 'mean_squared_error'
+epochs = 100
+batch_size = 32
+dataset_size = 500
+size_of_test_set = 20
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -91,7 +104,7 @@ def build_regressor(optimizer):
 # Keras nos recomenda RMSprop como optimizer de RNNs, porém 'adam' tem melhor
 # performance neste modelo
 regressor = KerasClassifier(build_fn = build_regressor)
-parameters = {'batch_size': [16, 32, 48],
+parameters = {'batch_size': [16, 32, 48, 60],
               'epochs': [100, 250 ,500],
               'optimizer': ['adam', 'rmsprop']}
 
@@ -116,3 +129,6 @@ print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning
 
 print('best parameters = {}'.format(best_parameters))
 print('best accuracy = {}'.format(best_accuracy))
+
+sys.stdout = orig_stdout
+f.close()
