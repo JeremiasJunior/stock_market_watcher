@@ -6,12 +6,12 @@ Created on Sat Jan 25 18:04:53 2020
 @author: gbson
 """
 
-'''
+
 import sys
 orig_stdout = sys.stdout
-f = open('MSFT_analysis_3_outputs', 'w')
+f = open('MSFT_analysis_3_real_deal', 'w')
 sys.stdout = f
-'''
+
 
 timesteps = 20
 indicators = 1
@@ -30,9 +30,9 @@ from stockstats import StockDataFrame as Sdf
 import pandas_datareader.data as web
 import os
 import time
-
+'''
 os.chdir('/home/gbson/Desktop/')
-
+'''
 # preprocessing
 MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 
@@ -106,7 +106,7 @@ def build_regressor(optimizer):
 # Keras nos recomenda RMSprop como optimizer de RNNs, porém 'adam' tem melhor
 # performance neste modelo
 regressor = KerasClassifier(build_fn = build_regressor)
-parameters = {'batch_size': [16, 32, 48, 60],
+parameters = {'batch_size': [3, 6],
               'epochs': [50, 100],
               'optimizer': ['adam', 'rmsprop']}
 
@@ -131,10 +131,6 @@ print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning
 
 print('best parameters = {}'.format(best_parameters))
 print('best accuracy = {}'.format(best_accuracy))
-'''
+
 sys.stdout = orig_stdout
 f.close()
-<<<<<<< HEAD
-=======
-'''
->>>>>>> 5f53fd952878ffe181e821524c032154f9c6e815
