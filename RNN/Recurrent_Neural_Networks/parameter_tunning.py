@@ -5,21 +5,23 @@ Created on Sat Jan 25 18:04:53 2020
 
 @author: gbson
 """
+
+'''
 import sys
 orig_stdout = sys.stdout
 f = open('MSFT_analysis_2_output', 'w')
 sys.stdout = f
+'''
 
-
-timesteps = 60
+timesteps = 20
 indicators = 1
-drop = 0.2
-optmizer = 'RMSprop'
+#drop = 0.2
+#optmizer = 'RMSprop'
 loss = 'mean_squared_error'
-epochs = 100
-batch_size = 32
-dataset_size = 500
-size_of_test_set = 20
+#epochs = 50
+#batch_size = 10
+dataset_size = 50
+size_of_test_set = 5
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,30 +30,30 @@ from stockstats import StockDataFrame as Sdf
 import pandas_datareader.data as web
 import os
 import time
-'''
+
 os.chdir('/home/gbson/Desktop/')
-'''
+
 # preprocessing
 MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 
 MSFT.isnull().values.any()
 
 dataset = MSFT
-# training set
+
+dataset = dataset.iloc[:dataset_size,:]
+
+    # training set
 data = dataset.iloc[: ,3:4].values
 
 
-# tamanho do test_set
-size_of_test_set = 120
+    # tamanho do test_set
+size_of_test_set = 20
 size_of_training_set = len(data) - size_of_test_set
 
 
 
 
 training_set = data[:size_of_training_set]
-
-
-
 
 # scaling
 from sklearn.preprocessing import MinMaxScaler
@@ -97,7 +99,7 @@ def build_regressor(optimizer):
 
     regressor.add(Dense(units = 1)) # units = 1 | pois só queremos 1 output
 
-    regressor.compile(optimizer = 'RMSprop', loss = 'mean_squared_error')
+    regressor.compile(optimizer = optimizer, loss = 'mean_squared_error')
     return regressor
 # loss = 'mean_squared_error' | pois estamos fazendo uma regressão
 
@@ -105,7 +107,7 @@ def build_regressor(optimizer):
 # performance neste modelo
 regressor = KerasClassifier(build_fn = build_regressor)
 parameters = {'batch_size': [16, 32, 48, 60],
-              'epochs': [100, 250 ,500],
+              'epochs': [50, 100],
               'optimizer': ['adam', 'rmsprop']}
 
 print('tunning parameters =', parameters)
@@ -129,6 +131,7 @@ print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning
 
 print('best parameters = {}'.format(best_parameters))
 print('best accuracy = {}'.format(best_accuracy))
-
+'''
 sys.stdout = orig_stdout
 f.close()
+'''
