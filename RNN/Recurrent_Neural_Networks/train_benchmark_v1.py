@@ -213,7 +213,7 @@ minute01 = int(end_of_train / 60)
 
 import sys
 orig_stdout = sys.stdout
-f = open('MSFT_analysis_1', 'w')
+f = open('MSFT_analysis_2', 'w')
 sys.stdout = f
 
 print("\nPrinting report of MSFT stock analysis:\n")
@@ -226,7 +226,7 @@ print("\nEach train session spend {} seconds and {} minute(s)\n".format(end_of_t
 
 acc_real = sum(acc_list) / len(acc_list)
 
-print("\nRNN com parâmetros:\ntimesteps = {};\nindicators = {};\ndrop = {};\noptimizer = {};\nloss = {};\nepochs = {};\nbatch_size = {};\ndataset_size = {};\nsize_of_test_set = {}\n".format(timesteps, indicators, drop, optmizer, loss, epochs, batch_size, dataset_size, size_of_test_set))
+print("\nRNN com parâmetros:\n\ntimesteps = {};\nindicators = {};\ndrop = {};\noptimizer = {};\nloss = {};\nepochs = {};\nbatch_size = {};\ndataset_size = {};\nsize_of_test_set = {}\n".format(timesteps, indicators, drop, optmizer, loss, epochs, batch_size, dataset_size, size_of_test_set))
 print("\na precisão real da RNN é de {}%.".format(acc_real))
 
 sys.stdout = orig_stdout

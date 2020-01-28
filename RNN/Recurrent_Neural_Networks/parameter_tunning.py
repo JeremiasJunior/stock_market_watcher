@@ -7,7 +7,7 @@ Created on Sat Jan 25 18:04:53 2020
 """
 import sys
 orig_stdout = sys.stdout
-f = open('MSFT_analysis_2_output', 'w')
+f = open('MSFT_analysis_3_outputs', 'w')
 sys.stdout = f
 
 
