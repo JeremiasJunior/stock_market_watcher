@@ -9,19 +9,19 @@ Created on Sat Jan 25 18:04:53 2020
 
 import sys
 orig_stdout = sys.stdout
-f = open('MSFT_analysis_3_real_deal', 'w')
+f = open('MSFT_analysis_4_real_deal', 'w')
 sys.stdout = f
 
 
-timesteps = 20
+timesteps = 60
 indicators = 1
 #drop = 0.2
 #optmizer = 'RMSprop'
 loss = 'mean_squared_error'
 #epochs = 50
 #batch_size = 10
-dataset_size = 50
-size_of_test_set = 5
+dataset_size = 500
+size_of_test_set = 10
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -106,7 +106,7 @@ def build_regressor(optimizer):
 # Keras nos recomenda RMSprop como optimizer de RNNs, porém 'adam' tem melhor
 # performance neste modelo
 regressor = KerasClassifier(build_fn = build_regressor)
-parameters = {'batch_size': [3, 6],
+parameters = {'batch_size': [24, 32],
               'epochs': [50, 100],
               'optimizer': ['adam', 'rmsprop']}
 
@@ -115,7 +115,7 @@ print('tunning parameters =', parameters)
 grid_search = GridSearchCV(estimator = regressor,
                            param_grid = parameters,
                            scoring = 'neg_mean_squared_error',
-                           cv = 10)
+                           cv = 5)
 start1 = time.time()
 grid_search = grid_search.fit(X_train, y_train)
 end1 = time.time()
