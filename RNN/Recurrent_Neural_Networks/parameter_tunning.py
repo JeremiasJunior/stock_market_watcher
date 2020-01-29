@@ -127,7 +127,7 @@ best_accuracy = grid_search.best_score_
 
 minute1 = int(tunning_time / 60)
 
-print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning_time, minute1))
+print('o tunning levou {} segundos ou {} minuto(s) para completar'.format(tunning_time, minute1))
 
 print('best parameters = {}'.format(best_parameters))
 print('best accuracy = {}'.format(best_accuracy))
