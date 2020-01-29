@@ -9,7 +9,7 @@ Created on Sat Jan 25 18:04:53 2020
 
 import sys
 orig_stdout = sys.stdout
-f = open('MSFT_analysis_5_real_deal', 'w')
+f = open('MSFT_analysis_4_test_real_deal', 'w')
 sys.stdout = f
 
 
@@ -30,9 +30,9 @@ from stockstats import StockDataFrame as Sdf
 import pandas_datareader.data as web
 import os
 import time
-'''
-os.chdir('/home/gbson/Desktop/')
-'''
+
+os.chdir('/home/gbson2/stock_cmpr/RNN/Recurrent_Neural_Networks/')
+
 # preprocessing
 MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 
@@ -107,7 +107,7 @@ def build_regressor(optimizer):
 # performance neste modelo
 regressor = KerasClassifier(build_fn = build_regressor)
 parameters = {'batch_size': [24, 32],
-              'epochs': [50, 100, 150, 250],
+              'epochs': [50, 100, 150, 200, 250],
               'optimizer': ['adam', 'rmsprop']}
 
 print('tunning parameters =', parameters)
@@ -115,7 +115,7 @@ print('tunning parameters =', parameters)
 grid_search = GridSearchCV(estimator = regressor,
                            param_grid = parameters,
                            scoring = 'neg_mean_squared_error',
-                           cv = 1)
+                           cv = 2)
 start1 = time.time()
 grid_search = grid_search.fit(X_train, y_train)
 end1 = time.time()
@@ -127,7 +127,7 @@ best_accuracy = grid_search.best_score_
 
 minute1 = int(tunning_time / 60)
 
-print('o tunning levou {} segundos e {} minuto(s) para completar'.format(tunning_time, minute1))
+print('o tunning levou {} segundos ou {} minuto(s) para completar'.format(tunning_time, minute1))
 
 print('best parameters = {}'.format(best_parameters))
 print('best accuracy = {}'.format(best_accuracy))
