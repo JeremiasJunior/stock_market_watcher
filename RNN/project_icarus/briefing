@@ -1,0 +1,6 @@
+project icarus:
+
+	---descrição---
+	consiste em prever precisão e tempo de treino para as
+	RNNs baseado de dados coletados de treinos anteriores
+
