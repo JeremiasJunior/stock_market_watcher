@@ -56,9 +56,9 @@ for i in range(0,10):
     import pandas_datareader.data as web
     import os
     import time
-    '''
-    os.chdir('/home/gbson/Desktop/')
-    '''
+    
+    os.chdir('/home/gbson2/stock_cmpr/RNN/Recurrent_Neural_Networks/datasets/')
+    
     # preprocessing
     MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 
