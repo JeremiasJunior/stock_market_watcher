@@ -1,0 +1,23 @@
+
+Printing report of MSFT stock analysis:
+
+
+This code finished in 9454.55111694336 seconds and 157 minute(s).
+
+
+Each train session spend 945.455111694336 seconds and 15.7 minute(s)
+
+
+RNN com parâmetros:
+timesteps = 60;
+indicators = 1;
+drop = 0.2;
+optimizer = RMSprop;
+loss = mean_squared_error;
+epochs = 50;
+batch_size = 32;
+dataset_size = 3284;
+size_of_test_set = 20
+
+
+a precisão real da RNN é de 61.05263157894736%.
