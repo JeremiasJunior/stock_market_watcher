@@ -1,5 +1,0 @@
-instalar ssh: 'ou copiar os arquivos "id_rsa", "id_rsa.pub", "known_hosts" para
-a pasta /home/user/.ssh
-
-    - na pasta /home/user/.ssh  executar código 'ssh-keygen -t rsa -b 2048'
-    - depois executar uma variação de 'ssh-keygen -t rsa -b 2048'

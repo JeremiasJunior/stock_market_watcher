@@ -1,4 +1,0 @@
-git add .       # atualiza a pasta
-git commit -a   # deixa você selecionar o que será atualizado
-git push        # atualiza a página do git hub
-git pull        # atualiza a SUA pasta
