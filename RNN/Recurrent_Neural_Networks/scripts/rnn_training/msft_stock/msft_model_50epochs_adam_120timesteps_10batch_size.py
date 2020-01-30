@@ -37,7 +37,7 @@ n_loops = 1
 
 for i in range(0,n_loops):
     
-    print("initializing {} out of {} loop(s).".format(i,n_loops))
+    print("initializing {} out of {} loop(s).".format(i + 1,n_loops))
     
     timesteps = 120
     indicators = 1 # ou utilize 'training_set.shape[1]' para saber quantos indicadores
@@ -58,9 +58,9 @@ for i in range(0,n_loops):
     import pandas_datareader.data as web
     import os
     import time
-    '''
-    os.chdir('/home/gbson/Desktop/')
-    '''
+    
+    os.chdir('/home/gbson2/stock_cmpr/RNN/Recurrent_Neural_Networks/datasets/')
+    
     # preprocessing
     MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
 

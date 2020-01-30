@@ -13,8 +13,7 @@ orig_stdout = sys.stdout
 f = open('long_train_little_output.txt', 'w')
 sys.stdout = f
 '''
-name_of_the_output_of_this_file = 'msft_model_200epochs_adam_performance'
-
+name_of_the_output_of_this_file = 'msft_model_50epochs_rmsprop_48batch_size_performance'
 
 
 
@@ -22,35 +21,31 @@ name_of_the_output_of_this_file = 'msft_model_200epochs_adam_performance'
 
 import time
 
-
-start_1 = time.time()
-
-
-
-
 timesteps = 60
 indicators = 1
 drop = 0.2
 optmizer = 'rmsprop'
 loss = 'mean_squared_error'
-epochs = 200
-batch_size = 32
+epochs = 50
+batch_size = 48
 size_of_test_set = 20
 
 start01 = time.time()
 acc_list = []
 
-for i in range(0,10):
+n_loops = 1
 
-    #print("{} de {} loop(s)".format()
-
+for i in range(0,n_loops):
+    
+    print("initializing {} out of {} loop(s).".format(i + 1,n_loops))
+    
     timesteps = 60
     indicators = 1 # ou utilize 'training_set.shape[1]' para saber quantos indicadores
     drop = 0.2
     optmizer = 'rmsprop'
     loss = 'mean_squared_error'  
-    epochs = 200
-    batch_size = 32
+    epochs = 50
+    batch_size = 48
 
     # dataset_size = len(dataset)
 
@@ -72,7 +67,20 @@ for i in range(0,10):
     MSFT.isnull().values.any()
 
     dataset = MSFT
+    
+    
+    
+    
+    
+    # dataset_size
     dataset_size = len(dataset)
+    
+    
+    
+    
+    
+    
+    
     dataset = dataset.iloc[:dataset_size,:]
 
     # training set
@@ -219,24 +227,23 @@ for i in range(0,10):
 
     print("A RNN demorou {} segundos ou {} minuto(s) para treinar".format(a1, minute))
 
-end_1 = time.time()
+end01 = time.time()
 
+end_of_train = end01 - start01
+minute01 = int(end_of_train / 60)
 
 import sys
 orig_stdout = sys.stdout
-f = open('msft_model_200epochs_adam_performance', 'w')
+f = open('msft_model_50epochs_rmsprop_48batch_size_performance', 'w')
 sys.stdout = f
 
-end_final_1 = end_1 - start01
-minute_1 = int(end_final_1 / 60)
-
 print("\nPrinting report of {}:\n".format(name_of_the_output_of_this_file))
-print("\nThis code finished in {} seconds and {} minute(s).\n".format(end_final_1, minute_1))
+print("\nThis code finished in {} seconds and {} minute(s).\n".format(end_of_train, minute01))
 
-each_train = end_final_1 / len(acc_list)
-minute02 = end_final_1 / 60
+end_of_train1 = end_of_train / len(acc_list)
+minute02 = end_of_train1 / 60
 
-print("\nEach train session spend {} seconds and {} minute(s)\n".format(each_train, minute02))
+print("\nEach train session spend {} seconds and {} minute(s)\n".format(end_of_train1, minute02))
 
 acc_real = sum(acc_list) / len(acc_list)
 

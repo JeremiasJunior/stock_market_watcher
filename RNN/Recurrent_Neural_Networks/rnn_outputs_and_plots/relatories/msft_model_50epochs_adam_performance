@@ -1,0 +1,23 @@
+
+Printing report of msft_model_50epochs_adam_performance:
+
+
+This code finished in 9828.938260316849 seconds and 163 minute(s).
+
+
+Each train session spend 982.8938260316849 seconds and 16.38156376719475 minute(s)
+
+
+RNN com parâmetros:
+timesteps = 60;
+indicators = 1;
+drop = 0.2;
+optimizer = adam;
+loss = mean_squared_error;
+epochs = 50;
+batch_size = 32;
+dataset_size = 3284;
+size_of_test_set = 20
+
+
+a precisão real da RNN é de 63.157894736842096%.

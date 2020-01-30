@@ -33,7 +33,11 @@ n_loops = 1
 
 for i in range(0,n_loops):
     
+<<<<<<< HEAD
     print("\ninitializing {} out of {} loop(s).\n".format(i,n_loops))
+=======
+    print("initializing {} out of {} loop(s).".format(i + 1,n_loops))
+>>>>>>> eec537dd3d91d739d6ac3609b2a9cffba830dafa
     
 
 
@@ -45,12 +49,19 @@ for i in range(0,n_loops):
     import matplotlib.pyplot as plt
     import pandas as pd
     import os
+<<<<<<< HEAD
     
     local_do_dataset = str(input("\ninsira o caminho para o local onde se encontra o dataset para ser usado na rede: "))
     
     os.chdir(local_do_dataset)
     
     nome_do_arq_do_dataset = str(input("\ninsira o nome do arquivo do dataset: "))
+=======
+    import time
+    
+    os.chdir('/home/gbson2/stock_cmpr/RNN/Recurrent_Neural_Networks/datasets/')
+    
+>>>>>>> eec537dd3d91d739d6ac3609b2a9cffba830dafa
     # preprocessing
     MSFT = pd.read_csv(nome_do_arq_do_dataset, index_col=False, header=0)
 
