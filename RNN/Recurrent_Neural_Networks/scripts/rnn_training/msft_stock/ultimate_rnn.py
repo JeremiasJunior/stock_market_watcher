@@ -5,64 +5,54 @@ Created on Sat Jan 18 06:32:17 2020
 
 @author: gbson
 """
-'''
-import sys
-
-# salvando outputs deste script
-orig_stdout = sys.stdout
-f = open('long_train_little_output.txt', 'w')
-sys.stdout = f
-'''
-name_of_the_output_of_this_file = 'msft_model_50epochs_adam_performance'
-
-
 
 
 
 import time
 
-timesteps = 60
+timesteps = int(input("insira o número de timesteps desejado: "))
 indicators = 1
-drop = 0.2
-optmizer = 'adam'
-loss = 'mean_squared_error'
-epochs = 50
-batch_size = 32
-size_of_test_set = 20
+drop = float(input("\ninsira o float correspondente ao drop da rede: "))
+optimizer = str(input("\ninsira o nome do optimizer que será utilizado: "))
+loss = str(input("\ninsira a 'loss' que será utilizada nesta rede: "))
+epochs = int(input("\ninsira o número de 'epochs' que esta rede realizará: "))
+batch_size = int(input("\ninsira o número que corresponda à batch_size da rede: "))
+size_of_test_set = int(input("\ninsira o número que corresponderá ao tamanho do 'test_set' da rede: "))
+units = int(input("\nnúmero de 'units' para a rede neural: "))
+n_lstm_layers = int(input("\ninsira o número de neurônios LSTM para a rede: "))
 
 start01 = time.time()
 acc_list = []
 
-n_loops = 10
+ticker = str(input("Qual ticker iremos analizar agora? (insira ticker):  "))
+
+name_of_the_output_of_this_file = (f'{ticker}_model_{timesteps}timesteps_{drop}drop_{optimizer}optimizer_{epochs}epochs_{batch_size}batch_size_{size_of_test_set}size_of_test_set_performance')
+
+
+n_loops = 1
 
 for i in range(0,n_loops):
     
-    print("initializing {} out of {} loop(s).".format(i,n_loops))
+    print("\ninitializing {} out of {} loop(s).\n".format(i,n_loops))
     
-    timesteps = 60
-    indicators = 1 # ou utilize 'training_set.shape[1]' para saber quantos indicadores
-    drop = 0.2
-    optmizer = 'adam'
-    loss = 'mean_squared_error'  
-    epochs = 50
-    batch_size = 32
+
 
     # dataset_size = len(dataset)
 
-    print("'{}' timestep(s); '{}' indicator(s); '{}' dropout; '{}' optmizer; '{}' loss calculation; {} epoch(s) and {} batch_size".format(timesteps,indicators, drop, optmizer, loss, epochs, batch_size))
+    print("'{}' timestep(s); '{}' indicator(s); '{}' dropout; '{}' optimizer; '{}' loss calculation; {} epoch(s) and {} batch_size".format(timesteps,indicators, drop, optimizer, loss, epochs, batch_size))
 
     import numpy as np
     import matplotlib.pyplot as plt
     import pandas as pd
-    from stockstats import StockDataFrame as Sdf
-    import pandas_datareader.data as web
     import os
-    import time
-    '''
-    os.chdir('/home/gbson/Desktop/')
-    '''
+    
+    local_do_dataset = str(input("\ninsira o caminho para o local onde se encontra o dataset para ser usado na rede: "))
+    
+    os.chdir(local_do_dataset)
+    
+    nome_do_arq_do_dataset = str(input("\ninsira o nome do arquivo do dataset: "))
     # preprocessing
-    MSFT = pd.read_csv('MSFT_full1.csv', index_col=False, header=0)
+    MSFT = pd.read_csv(nome_do_arq_do_dataset, index_col=False, header=0)
 
     MSFT.isnull().values.any()
 
@@ -88,7 +78,6 @@ for i in range(0,n_loops):
 
 
     # tamanho do test_set
-    size_of_test_set = 20
     size_of_training_set = len(data) - size_of_test_set
 
 
@@ -117,18 +106,21 @@ for i in range(0,n_loops):
     from keras.layers import Dense
     from keras.layers import LSTM
     from keras.layers import Dropout
-
+    
+    
+    # construindo o modelo de RNN
     regressor = Sequential()
-    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], indicators )))
+    regressor.add(LSTM(units = units, return_sequences = True, input_shape = (X_train.shape[1], indicators )))
     regressor.add(Dropout(drop))
-    regressor.add(LSTM(units = 50, return_sequences = True))
-    regressor.add(Dropout(drop))
-    regressor.add(LSTM(units = 50, return_sequences = True))
-    regressor.add(Dropout(drop))
-    regressor.add(LSTM(units = 50)) 
+    
+    for i in range(0, n_lstm_layers):
+        regressor.add(LSTM(units = units, return_sequences = True))
+        regressor.add(Dropout(drop))
+    
+    regressor.add(LSTM(units = units)) 
     regressor.add(Dropout(drop))
     regressor.add(Dense(units = 1)) 
-    regressor.compile(optimizer = optmizer, loss = loss)
+    regressor.compile(optimizer = optimizer, loss = loss)
 
     start = time.time()
     regressor.fit(X_train, y_train, epochs = epochs, batch_size = batch_size)
@@ -157,13 +149,13 @@ for i in range(0,n_loops):
 
 
 
-    plt.plot(real_stock_price, color = 'red', label = 'Real MSFT Stock Price')
-    plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted MSFT Stock Price')
-    plt.title('MSFT Stock Price Prediction')
+    plt.plot(real_stock_price, color = 'red', label = (f'Real {ticker} Stock Price'))
+    plt.plot(predicted_stock_price, color = 'blue', label = (f'Predicted {ticker} Stock Price'))
+    plt.title(f'{ticker} Stock Price Prediction')
     plt.xlabel('Time')
-    plt.ylabel('MSFT Stock Price')
+    plt.ylabel(f'{ticker} Stock Price')
     plt.legend()
-    plt.savefig('msft_long_train.png')
+    plt.savefig(f'{name_of_the_output_of_this_file}.png')
 
     # calculating the accuracy of the model
     predicted_dia_anterior = []
@@ -185,7 +177,7 @@ for i in range(0,n_loops):
         elif (var_sd[i] < 0):
             subiu_desceu_predicted.append(0)
         elif (var_sd[i] == 0):
-            subiu_desceu_predicted.append('no variance')
+            subiu_desceu_predicted.append(2)
 
 
 
@@ -208,7 +200,7 @@ for i in range(0,n_loops):
         elif (var_sd_real[i] < 0):
             subiu_desceu_real.append(0)
         elif (var_sd_real[i] == 0):
-            subiu_desceu_real.append('no variance')
+            subiu_desceu_real.append(2)
         
     acc = []
     for i in range(0, len(subiu_desceu_real)):
@@ -234,7 +226,7 @@ minute01 = int(end_of_train / 60)
 
 import sys
 orig_stdout = sys.stdout
-f = open('msft_model_50epochs_adam_performance', 'w')
+f = open(name_of_the_output_of_this_file, 'w')
 sys.stdout = f
 
 print("\nPrinting report of {}:\n".format(name_of_the_output_of_this_file))
@@ -247,7 +239,7 @@ print("\nEach train session spend {} seconds and {} minute(s)\n".format(end_of_t
 
 acc_real = sum(acc_list) / len(acc_list)
 
-print("\nRNN com parâmetros:\ntimesteps = {};\nindicators = {};\ndrop = {};\noptimizer = {};\nloss = {};\nepochs = {};\nbatch_size = {};\ndataset_size = {};\nsize_of_test_set = {}\n".format(timesteps, indicators, drop, optmizer, loss, epochs, batch_size, dataset_size, size_of_test_set))
+print("\nRNN com parâmetros:\ntimesteps = {};\nindicators = {};\ndrop = {};\noptimizer = {};\nloss = {};\nepochs = {};\nbatch_size = {};\ndataset_size = {};\nsize_of_test_set = {}\n".format(timesteps, indicators, drop, optimizer, loss, epochs, batch_size, dataset_size, size_of_test_set))
 print("\na precisão real da RNN é de {}%.".format(acc_real))
 
 sys.stdout = orig_stdout
