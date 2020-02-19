@@ -1,0 +1,626 @@
+{
+  "OSXB3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TASA3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TASA4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RPMG3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "EALT4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "INEP3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CCXC3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "DMMO3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "NORD3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "LUPA3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "INEP4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "MMXM3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "BEES3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CRIV3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "BEES4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RPAD3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CRIV4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "BOBR4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "IDVL4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CELP5.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CELP7.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RNEW3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "IDVL3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "PINE4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "ADHM3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RNEW4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "BTTL3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TIET3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "GPIV33.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "JBDU3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "JBDU4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TIET4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "BSEV3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "ETER3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "HAGA3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "HBOR3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "MNPR3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "JHSF3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "JFEN3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "AZEV3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "PDGR3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "PTBL3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TCNO3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TCNO4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TCSA3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "VIVR3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CAMB4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "GSHP3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CTSA3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TECN3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TXRX4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TEKA4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "DTCY3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "CTSA4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "DOHL4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "AZEV4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "BBRK3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "HAGA4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "TPIS3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "KLBN3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "FRAS3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "KLBN4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RANI3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "FHER3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "PTNT4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "MWET4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "POMO3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "PLAS3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "POMO4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "IGBR3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "HOOT4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RCSL4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "IDNT3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "SHOW3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "OIBR3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "PFRM3.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "OIBR4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  },
+  "RANI4.SA": {
+    "curr_price": [],
+    "curr_volume": [],
+    "delta_price": [],
+    "curr_bid": [],
+    "curr_ask": [],
+    "curr_date": []
+  }
+}
