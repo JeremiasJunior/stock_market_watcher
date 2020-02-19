@@ -1,0 +1,23 @@
+coisas para fazer em relação à RNNs:
+
+
+	-> criar uma interface mais amigável para inserção de parâmetros
+		para a RNN. vivo mexendo no que não devia fazendo com
+		eu perca tempo pra caralho.
+
+
+	-> obter dados à respeito de " menos epochs = melhores RNNs? "
+		- tal coleção de dado consiste em criar um tunning no qual temos
+		o tamanho de um dataset realistico, e parâmetros realisticos
+		para a rede.
+
+	-> obter dados à respeito de " adam é melhor como optimizer que rmsprop para RNNs?"
+		- tal coleção de dado consiste em criar um tunning no qual temos
+		o tamanho de um dataset realistico, e parâmetros realisticos
+		para a rede.
+
+
+
+		side quests:
+
+			obter mais dados para 'project-icarus'.

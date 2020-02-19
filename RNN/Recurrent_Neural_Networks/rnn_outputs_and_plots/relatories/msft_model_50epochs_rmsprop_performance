@@ -1,0 +1,23 @@
+
+Printing report of msft_model_50epochs_rmsprop_performance:
+
+
+This code finished in 9844.939340114594 seconds and 164 minute(s).
+
+
+Each train session spend 984.4939340114594 seconds and 16.408232233524323 minute(s)
+
+
+RNN com parâmetros:
+timesteps = 60;
+indicators = 1;
+drop = 0.2;
+optimizer = rmsprop;
+loss = mean_squared_error;
+epochs = 50;
+batch_size = 32;
+dataset_size = 3284;
+size_of_test_set = 20
+
+
+a precisão real da RNN é de 63.1578947368421%.
