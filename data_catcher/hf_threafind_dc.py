@@ -55,7 +55,7 @@ data_dict = collections.defaultdict(list)
 
 for ticker in ticker_list:
     data_dict[ticker] = {
-        'curr_price': [],
+        'buy_bid': [],
         'curr_volume': [],
         'delta_price': [],
         'curr_bid': [],
