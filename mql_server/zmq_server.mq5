@@ -4,7 +4,7 @@
 extern string PROJECT_NAME = "TradeServer";
 extern string ZEROMQ_PROTOCOL = "tcp";
 extern string HOSTNAME = "*";
-extern int REP_PORT = 90;
+extern int REP_PORT = 10000;
 extern int MILLISECOND_TIMER = 1;  // 1 millisecond
 
 extern string t0 = "--- Trading Parameters ---";
@@ -33,16 +33,16 @@ int OnInit()
     repSocket.bind(StringFormat("%s://%s:%d", ZEROMQ_PROTOCOL, HOSTNAME, REP_PORT));
 
     /*
-        Maximum amount of time in milliseconds that the thread will try to send messages
+        Maximum amount of time in milliseconds that the thread will try to send messages 
         after its socket has been closed (the default value of -1 means to linger forever):
     */
 
     repSocket.setLinger(1000);  // 1000 milliseconds
 
-    /*
-      If we initiate socket.send() without having a corresponding socket draining the queue,
+    /* 
+      If we initiate socket.send() without having a corresponding socket draining the queue, 
       we'll eat up memory as the socket just keeps enqueueing messages.
-
+      
       So how many messages do we want ZeroMQ to buffer in RAM before blocking the socket?
     */
 
@@ -50,7 +50,7 @@ int OnInit()
 
     return(INIT_SUCCEEDED);
 }
-
+  
 //+------------------------------------------------------------------+
 //| Expert deinitialization function                                 |
 //+------------------------------------------------------------------+
@@ -63,11 +63,11 @@ void OnDeinit(const int reason)
 //| Expert timer function                                            |
 //+------------------------------------------------------------------+
 void OnTimer()
-{
+{   
     // Get client's response, but don't wait.
     repSocket.recv(request,true);
-
-    // MessageHandler() should go here.
+    
+    // MessageHandler() should go here.   
     MessageHandler(request);
 }
 //+------------------------------------------------------------------+
@@ -76,19 +76,19 @@ void MessageHandler(ZmqMsg &localRequest)
 {
     // Output object
     ZmqMsg reply;
-
+    
     // Message components for later.
     string components[];
-
+    
     if(localRequest.size() > 0) {
-        // Get data from request
+        // Get data from request   
         ArrayResize(myData, localRequest.size());
         localRequest.getData(myData);
         string dataStr = CharArrayToString(myData);
-
+        
         // Process data
         ParseZmqMessage(dataStr, components);
-
+        
         // Interpret data
         InterpretZmqMessage(components);
     }
@@ -109,10 +109,10 @@ ENUM_TIMEFRAMES TFMigrate(int tf)
         case 1440: return(PERIOD_D1);
         case 10080: return(PERIOD_W1);
         case 43200: return(PERIOD_MN1);
-
+        
         case 2: return(PERIOD_M2);
         case 3: return(PERIOD_M3);
-        case 4: return(PERIOD_M4);
+        case 4: return(PERIOD_M4);      
         case 6: return(PERIOD_M6);
         case 10: return(PERIOD_M10);
         case 12: return(PERIOD_M12);
@@ -125,7 +125,7 @@ ENUM_TIMEFRAMES TFMigrate(int tf)
         case 16396: return(PERIOD_H12);
         case 16408: return(PERIOD_D1);
         case 32769: return(PERIOD_W1);
-        case 49153: return(PERIOD_MN1);
+        case 49153: return(PERIOD_MN1);      
         default: return(PERIOD_CURRENT);
     }
 }
@@ -153,22 +153,22 @@ void InterpretZmqMessage(string& compArray[])
     /*
       compArray[0] = TRADE or RATES
       If RATES -> compArray[1] = Symbol
-
+      
       If TRADE ->
           compArray[0] = TRADE
           compArray[1] = ACTION (e.g. OPEN, MODIFY, CLOSE)
           compArray[2] = TYPE (e.g. OP_BUY, OP_SELL, etc - only used when ACTION=OPEN)
-
-          // ORDER TYPES:
+          
+          // ORDER TYPES: 
           // https://docs.mql4.com/constants/tradingconstants/orderproperties
-
+          
           // OP_BUY = 0
           // OP_SELL = 1
           // OP_BUYLIMIT = 2
           // OP_SELLLIMIT = 3
           // OP_BUYSTOP = 4
           // OP_SELLSTOP = 5
-
+          
           compArray[3] = Symbol (e.g. EURUSD, etc.)
           compArray[4] = Open/Close Price (ignored if ACTION = MODIFY)
           compArray[5] = SL
@@ -187,34 +187,34 @@ void InterpretZmqMessage(string& compArray[])
         switch_action = 3;
     else if (compArray[0] == "DATA")
         switch_action = 4;
-
+        
     string ret = "";
     int ticket = -1;
     bool ans = false;
 
     MqlRates rates[];
-    ArraySetAsSeries(rates, true);
+    ArraySetAsSeries(rates, true);    
 
     int price_count = 0;
-
+    
     ZmqMsg msg("[SERVER] Processing");
-
-    switch(switch_action)
+    
+    switch(switch_action) 
     {
-        case 1:
+        case 1: 
             repSocket.send(msg, false);
             // IMPLEMENT OPEN TRADE LOGIC HERE
             break;
-        case 2:
-            ret = "N/A";
-            if(ArraySize(compArray) > 1)
+        case 2: 
+            ret = "N/A"; 
+            if(ArraySize(compArray) > 1) 
                 ret = GetCurrent(compArray[1]);
             repSocket.send(ret, false);
             break;
         case 3:
             repSocket.send(msg, false);
             // IMPLEMENT CLOSE TRADE LOGIC HERE
-
+            
             break;
         case 4:
             ret = "";
@@ -222,33 +222,33 @@ void InterpretZmqMessage(string& compArray[])
             price_count = CopyRates(compArray[1], TFMigrate(StringToInteger(compArray[2])),
                           StringToTime(compArray[3]), StringToTime(compArray[4]),
                           rates);
-
+            
             if (price_count > 0)
-            {
+            {              
                 // Construct string of price|price|price|.. etc and send to PULL client.
                 for(int i = 0; i < price_count; i++ ) {
                       ret = ret + "|" + StringFormat("%.2f,%.2f,%.2f,%.2f,%d,%d", rates[i].open, rates[i].low, rates[i].high, rates[i].close, rates[i].tick_volume, rates[i].real_volume);
                 }
-
+              
                 Print("Sending: " + ret);
                 repSocket.send(ret, false);
             }
             break;
-        default:
+        default: 
             break;
     }
 }
 //+------------------------------------------------------------------+
 // Parse Zmq Message
-void ParseZmqMessage(string& message, string& retArray[])
-{
+void ParseZmqMessage(string& message, string& retArray[]) 
+{   
     Print("Parsing: " + message);
-
+    
     string sep = "|";
     ushort u_sep = StringGetCharacter(sep,0);
-
+    
     int splits = StringSplit(message, u_sep, retArray);
-
+    
     for(int i = 0; i < splits; i++) {
         Print(IntegerToString(i) + ") " + retArray[i]);
     }
@@ -267,20 +267,20 @@ string GetVolume(string symbol, datetime start_time, datetime stop_time)
 string GetCurrent(string symbol)
 {
     MqlTick Last_tick;
-    MqlBookInfo bookArray[];
-
-    SymbolInfoTick(symbol,Last_tick);
-
+    MqlBookInfo bookArray[]; 
+    
+    SymbolInfoTick(symbol,Last_tick);    
+    
     double bid = Last_tick.bid;
     double ask = Last_tick.ask;
-
+    
     bool getBook = MarketBookGet(symbol,bookArray);
     long buy_volume = 0;
     long sell_volume = 0;
     long buy_volume_market = 0;
     long sell_volume_market = 0;
     if (getBook) {
-       for (int i =0; i < ArraySize(bookArray); i++ )
+       for (int i =0; i < ArraySize(bookArray); i++ ) 
        {
             if (bookArray[i].type == BOOK_TYPE_SELL)
                sell_volume += bookArray[i].volume_real;
@@ -297,15 +297,15 @@ string GetCurrent(string symbol)
     long tick_volume = Last_tick.volume;
     long real_volume = Last_tick.volume_real;
     MarketBookAdd(symbol);
-
+    
     string p;
     static datetime dTime = Last_tick.time;
     int size = ArraySize(bookArray);
-    p = StringFormat("%s, %.2f, %.2f\n", TimeToString(dTime), bid, ask);
+    p = StringFormat(", %.2f, %.2f\n", bid, ask);
     for(int i = 0; i<size-1; i++){
       StringAdd(p, StringFormat("%d, %.2f, %f\n", bookArray[i].type, bookArray[i].price, bookArray[i].volume_real));
     }
-
+      
     return(p);
    // return(StringFormat("%.2f,%.2f,%d,%d,%d,%d,%d,%d", bid, ask, buy_volume, sell_volume, tick_volume, real_volume, buy_volume_market, sell_volume_market));
 }
